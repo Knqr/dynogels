@@ -2,10 +2,11 @@
 
 const Schema = require('../lib/schema');
 const chai = require('chai');
-const expect = chai.expect;
 const Joi = require('joi');
 const _ = require('lodash');
 const sinon = require('sinon');
+
+const expect = chai.expect;
 
 chai.should();
 
@@ -51,6 +52,25 @@ describe('schema', () => {
 
       const s = new Schema(config);
       s.tableName.should.equal(func);
+    });
+
+    it('should add encrypt with default value to schema', () => {
+      const config = {
+        hashKey: 'id'
+      };
+
+      const s = new Schema(config);
+      s.encrypt.should.be.false;
+    });
+
+    it('should add encrypt to schema', () => {
+      const config = {
+        hashKey: 'id',
+        encrypt: true
+      };
+
+      const s = new Schema(config);
+      s.encrypt.should.be.true;
     });
 
     it('should add timestamps to schema', () => {
